@@ -1,29 +1,49 @@
-async function editFormHandler(event) {
-    event.preventDefault();
+const postID = window.location.pathname.split("/").pop();
 
-    const title = document.querySelector('input[name="post-title"]').value;
-    const content = document.querySelector('input[name="content"]').value;
-    console.log(title);
-    console.log(content);
+// Update Post frontend
+const updatePost = async (event) => {
+	event.preventDefault();
+	console.log("The update button was clicked");
 
-    const id = window.location.toString().split('/')
-    [window.location.toString().split('/').length -1];
+	const title = document.querySelector("#update-post-title").value.trim();
+	const content = document.querySelector("#update-post-content").value.trim();
 
-    const repsonse = await fetch (`/api/posts/${id}`, {
-        method: 'PUT',
-        body: JSON.stringify({
-            post_id: id, title, content
-        }),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
+    console.log("YO THIS IS TITLE", title);
+	console.log("YO THIS IS DA CONTENT", content);
 
-    if (response.ok) {
-        document.location.replace('/dashboard');
-    } else {
-        alert(response.statusText);
-    }
+	if (title && content) {
+		const response = await fetch(`/api/posts/${postID}`, {
+			method: "PUT",
+			body: JSON.stringify({ title, content }),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+
+		if (response.ok) {
+			window.location.href = "/dashboard";
+		} else {
+			alert("Failed to update post!");
+		}
+	}
 };
 
-document.querySelector('.edit-post-form').addEventListener('submit', editFormHandler);
+// Delete post frontend
+const deletePost = async (event) => {
+	event.preventDefault();
+	console.log("The delete button was clicked");
+
+	const response = await fetch(`/api/posts/${postID}`, {
+		method: "DELETE",
+	});
+
+	if (response.ok) {
+		window.location.href = "/dashboard";
+	} else {
+		alert("Failed to delete blog!");
+	}
+};
+
+// Listeners
+document.querySelector("#update-post-btn").addEventListener("click", updatePost);
+document.querySelector("#delete-post-btn").addEventListener("click", deletePost);
