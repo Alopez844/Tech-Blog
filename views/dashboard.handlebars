@@ -1,14 +1,38 @@
-
-{{#if posts.length}}
-
-<section>
-    <h2>Your Posts</h2>
-    {{#each posts as |post|}}
-    {{> dashboard-postinfo post}}
-    {{/each}}
+<section class="user-dashboard">
+		
+	{{>postOverview}}	
+	
+    <div id="create-post-btn">
+        <button type="submit" class="new-post-btn btn"><i class="fas fa-plus"></i> CREATE NEW POST</button>
+    </div>
 </section>
-{{/if}}
 
-<button type="submit" class="btn"><a class="link" href="/dashboard/new">+ New Post</a></button>
+<section id="create-post-card" class="add-post hide">
+	<div class="card">
+		<div class="card-header">
+			<div class="card-title">Create New Post</div>
+		</div>
+		<div class="card-body">
+			<form id="new-post-form">
+				<label for="new-post-title" class="form-label">TITLE</label>
+				<textarea
+					id="new-post-title"
+					rows="2"
+					placeholder="Add your post title here."
+					aria-setsize="fixed"
+				></textarea>
+				<label for="new-post-content" class="form-label">POST CONTENT</label>
+				<textarea
+					id="new-post-content"
+					rows="10"
+					placeholder="Add your post content here."
+					aria-setsize="fixed"
+				></textarea>
+			</form>
+			<button id="add-post-btn" type="submit" class="new-post-btn btn"><i class="fas fa-plus"></i>
+				ADD POST</button>
+		</div>
+	</div>
+</section>
 
-<script src="/js/addPost.js"></script>
+<script src="js/addPost.js"></script>
